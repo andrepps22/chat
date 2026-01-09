@@ -12,6 +12,7 @@ class AuthViewModel with ChangeNotifier {
   UserDto? userDto;
   bool islogged = false;
   String? errorMessage;
+  bool isLogin = true;
 
   AuthViewModel({required IAuthRepository authRepository}):_authRepository = authRepository {
     authLoginCommand = Command(() => _authRepository.login(userDto!),);
@@ -19,6 +20,10 @@ class AuthViewModel with ChangeNotifier {
 
     authLoginCommand.addListener(notifyListeners);
     authRegisterCommand.addListener(notifyListeners);
+  }
+  void toogleLoginRegister(){
+    isLogin = !isLogin;
+    notifyListeners();
   }
 
   @override

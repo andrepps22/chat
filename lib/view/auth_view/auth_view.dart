@@ -17,17 +17,20 @@ class _AuthViewState extends State<AuthView> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController email = TextEditingController();
   final TextEditingController senha = TextEditingController();
+  final TextEditingController nome = TextEditingController();
 
   void onSaved(String? string) {}
 
   void login(AuthViewModel vm) async {
     vm.userDto = UserDto(email: email.text, password: senha.text);
-    await vm.login();
+    vm.isLogin ? await vm.login() : await vm.register();
 
     if (!mounted) return;
 
     if (vm.islogged) {
-      Navigator.of(context).pushNamedAndRemoveUntil(AppRouterStatic.home, (route) => false,);
+      Navigator.of(
+        context,
+      ).pushNamedAndRemoveUntil(AppRouterStatic.home, (route) => false);
     }
     if (vm.errorMessage != null) {
       showDialog(
@@ -67,12 +70,32 @@ class _AuthViewState extends State<AuthView> {
                   size: 50,
                   color: Theme.of(context).colorScheme.primary,
                 ),
-                SizedBox(height: 50),
+                SizedBox(height: 20,),
+                vm.isLogin
+                    ? Text(
+                        'Bem vindo, faça o login para continua',
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                      )
+                    : Text(
+                        'Cria sua nova conta para continua',
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                      ),
+                SizedBox(height: 30),
                 Form(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     spacing: 10,
                     children: [
+                      if (!vm.isLogin)
+                      CustomTextfield(
+                        label: 'Nome',
+                        controller: nome,
+                        onSaved: onSaved,
+                      ),
                       CustomTextfield(
                         label: 'Email',
                         controller: email,
@@ -86,16 +109,29 @@ class _AuthViewState extends State<AuthView> {
                       ),
 
                       SizedBox(height: 15),
-                      CustomButtom(label: 'Entrar', onTap: () => login(vm)),
+                      CustomButtom(label:vm.isLogin? 'Entrar': 'Registrar', onTap: () => login(vm)),
                       SizedBox(height: 10),
-                      TextButton(
-                        onPressed: () {},
-                        child: Text(
-                          'Criar uma nova conta',
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.primary,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        spacing: 4,
+                        children: [
+                          Text(vm.isLogin?
+                            'Ainda não faz parte?': 'Ja tem uma conta?',
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
                           ),
-                        ),
+                          GestureDetector(
+                            onTap: () => vm.toogleLoginRegister(),
+                            child: Text( vm.isLogin?
+                              'Crie uma conta!':'Faça Login',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
