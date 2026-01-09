@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 
 class AuthViewModel with ChangeNotifier {
   late final Command authLoginCommand;
+  late final Command authRegisterCommand;
   final IAuthRepository _authRepository;
   UserDto? userDto;
   bool islogged = false;
@@ -14,14 +15,17 @@ class AuthViewModel with ChangeNotifier {
 
   AuthViewModel({required IAuthRepository authRepository}):_authRepository = authRepository {
     authLoginCommand = Command(() => _authRepository.login(userDto!),);
+    authRegisterCommand = Command(() => _authRepository.register(userDto!),);
 
     authLoginCommand.addListener(notifyListeners);
+    authRegisterCommand.addListener(notifyListeners);
   }
 
   @override
   void dispose() {
     errorMessage = null;
     authLoginCommand.removeListener(notifyListeners);
+    authRegisterCommand.removeListener(notifyListeners);
     super.dispose();
   }
 
@@ -30,6 +34,20 @@ class AuthViewModel with ChangeNotifier {
     await authLoginCommand.execute();
 
     final Result<User?, Exception> result = authLoginCommand.data;
+
+    result.when(
+      success: (value) {
+        islogged = true;
+      }, 
+      failure: (exception){  
+        islogged = false;
+        errorMessage = exception.toString();});
+
+  }
+  Future<void> register() async {
+    await authRegisterCommand.execute();
+
+    final Result<UserCredential, Exception> result = authRegisterCommand.data;
 
     result.when(
       success: (value) {
