@@ -20,6 +20,7 @@ class AuthViewModel with ChangeNotifier {
 
   @override
   void dispose() {
+    errorMessage = null;
     authLoginCommand.removeListener(notifyListeners);
     super.dispose();
   }
@@ -34,7 +35,9 @@ class AuthViewModel with ChangeNotifier {
       success: (value) {
         islogged = true;
       }, 
-      failure: (exception) => errorMessage = exception.toString(),);
+      failure: (exception){  
+        islogged = false;
+        errorMessage = exception.toString();});
 
   }
 
