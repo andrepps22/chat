@@ -6,6 +6,6 @@ abstract interface class IAuthRepository {
   Future<Result<User?, Exception>> login(UserDto userDto);
   Future<Result<User?, Exception>> register(UserDto userDto);
   Future<void> logout();
-  User? currentUser;
+  User? get currentUser;
   
 }

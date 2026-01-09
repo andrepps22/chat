@@ -13,7 +13,7 @@ class AuthRepositoryImpl implements IAuthRepository {
 
 
   @override
-  User? currentUser;
+  User? get => currentUser;
 
   @override
   Future<Result<User?, Exception>> login(UserDto userDto) async {
