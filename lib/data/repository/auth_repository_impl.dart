@@ -16,20 +16,23 @@ class AuthRepositoryImpl implements IAuthRepository {
   User? currentUser;
 
   @override
-  Future<Result<User?, Exception>> login(UserDto userDto) {
-    // TODO: implement login
-    throw UnimplementedError();
+  Future<Result<User?, Exception>> login(UserDto userDto) async {
+    final userJson = userDto.toJson();
+    final result = await authServices.signIn(userJson: userJson);
+
+    return result.when(success: (value) => Success(value), failure: (exception) => Failure(exception),);
   }
 
   @override
-  Future<void> logout() {
-    // TODO: implement logout
-    throw UnimplementedError();
+  Future<void> logout() async {
+    await authServices.signOut();
   }
 
   @override
-  Future<Result<User?, Exception>> register(UserDto userDto) {
-    // TODO: implement register
-    throw UnimplementedError();
+  Future<Result<User?, Exception>> register(UserDto userDto) async {
+    final userJson = userDto.toJson();
+    final result = await authServices.signUp(userJson: userJson);
+
+    return result.when(success: (value) => Success(value), failure: (exception) => Failure(exception),);
   }
 }
