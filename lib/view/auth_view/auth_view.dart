@@ -27,7 +27,7 @@ class _AuthViewState extends State<AuthView> {
     if (!mounted) return;
 
     if (vm.islogged) {
-      Navigator.of(context).pushNamed(AppRouterStatic.home);
+      Navigator.of(context).pushNamedAndRemoveUntil(AppRouterStatic.home, (route) => false,);
     }
     if (vm.errorMessage != null) {
       showDialog(
