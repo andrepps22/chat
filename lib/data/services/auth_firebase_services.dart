@@ -5,13 +5,12 @@ class AuthServices {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   Future<Result<User?, Exception>> signIn({
-    required String email,
-    required String password,
+    required Map<String, dynamic> userJson
   }) async {
     try {
       final result = await _firebaseAuth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
+         email: userJson['email'],
+        password: userJson['password'],
       );
       return Success(result.user);
     } on FirebaseAuthException catch (e) {
@@ -20,13 +19,12 @@ class AuthServices {
   }
 
   Future<Result<User?, Exception>> signUp({
-    required String email,
-    required String password,
+    required Map<String, dynamic> userJson
   }) async {
     try {
       final result = await _firebaseAuth.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
+        email: userJson['email'],
+        password: userJson['password'],
       );
       return Success(result.user);
     } on FirebaseException catch (e) {
