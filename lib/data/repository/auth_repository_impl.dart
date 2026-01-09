@@ -26,7 +26,7 @@ class AuthRepositoryImpl implements IAuthRepository {
   }
 
   @override
-  Future<Result<User?, Exception>> register(UserDto userDto) async {
+  Future<Result<UserCredential, Exception>> register(UserDto userDto) async {
     final userJson = userDto.toJson();
     final result = await authServices.signUp(userJson: userJson);
 

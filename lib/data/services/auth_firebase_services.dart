@@ -18,7 +18,7 @@ class AuthServices {
     }
   }
 
-  Future<Result<User?, Exception>> signUp({
+  Future<Result<UserCredential, Exception>> signUp({
     required Map<String, dynamic> userJson
   }) async {
     try {
@@ -26,7 +26,7 @@ class AuthServices {
         email: userJson['email'],
         password: userJson['password'],
       );
-      return Success(result.user);
+      return Success(result);
     } on FirebaseException catch (e) {
       return Failure(e);
     }
