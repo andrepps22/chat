@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 abstract interface class IAuthRepository {
   Future<Result<User?, Exception>> login(UserDto userDto);
-  Future<Result<User?, Exception>> register(UserDto userDto);
+  Future<Result<UserCredential, Exception>> register(UserDto userDto);
   Future<void> logout();
   User? get currentUser;
   
