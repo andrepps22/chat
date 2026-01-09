@@ -25,11 +25,8 @@ class MainApp extends StatefulWidget {
 class _MainAppState extends State<MainApp> {
   bool isDark = false;
 
-  void alterarTema(){
-    setState(() {
-      isDark = !isDark;
-    });
-  }
+  
+  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
