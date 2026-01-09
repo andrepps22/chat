@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "272005928943",
+    "firebase_url": "https://estudo-6050b-default-rtdb.firebaseio.com",
+    "project_id": "estudo-6050b",
+    "storage_bucket": "estudo-6050b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:272005928943:android:9ee91a01d75f08fdb1c81a",
+        "android_client_info": {
+          "package_name": "br.com.chatinterno.chat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBpFpWDE7AL6SdWiN5OunUItTdoJrQ8Or4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
