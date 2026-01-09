@@ -32,5 +32,7 @@ class AuthRepositoryImpl implements IAuthRepository {
 
     return result.when(success: (value) => Success(value), failure: (exception) => Failure(exception),);
   }
+
+  @override
   User? get currentUser => authServices.currentUser;
 }
