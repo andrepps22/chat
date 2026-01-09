@@ -13,9 +13,6 @@ class AuthRepositoryImpl implements IAuthRepository {
 
 
   @override
-  User? get => currentUser;
-
-  @override
   Future<Result<User?, Exception>> login(UserDto userDto) async {
     final userJson = userDto.toJson();
     final result = await authServices.signIn(userJson: userJson);
@@ -35,4 +32,5 @@ class AuthRepositoryImpl implements IAuthRepository {
 
     return result.when(success: (value) => Success(value), failure: (exception) => Failure(exception),);
   }
+  User? get currentUser => authServices.currentUser;
 }
