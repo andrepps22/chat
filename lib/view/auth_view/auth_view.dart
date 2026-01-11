@@ -22,7 +22,7 @@ class _AuthViewState extends State<AuthView> {
   void onSaved(String? string) {}
 
   void login(AuthViewModel vm) async {
-    vm.userDto = UserDto(email: email.text, password: senha.text);
+    vm.userDto = UserDto(nome: nome.text, email: email.text, password: senha.text);
     vm.isLogin ? await vm.login() : await vm.register();
 
     if (!mounted) return;

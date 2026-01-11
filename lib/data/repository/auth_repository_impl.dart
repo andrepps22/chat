@@ -30,7 +30,9 @@ class AuthRepositoryImpl implements IAuthRepository {
     final userJson = userDto.toJson();
     final result = await authServices.signUp(userJson: userJson);
 
-    return result.when(success: (value) => Success(value), failure: (exception) => Failure(exception),);
+    return result.when(
+      success: (value) => Success(value), 
+      failure: (exception) => Failure(exception),);
   }
 
   @override
