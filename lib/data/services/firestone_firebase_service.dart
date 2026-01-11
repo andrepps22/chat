@@ -6,8 +6,19 @@ class FirestoneFirebaseService {
 
   Future<Result<String, Exception>> addUser(Map<String, dynamic> user)async{
     try{
-      final doc = await db.collection('Users').add(user);
-      return Success(doc.id);
+      return db.collection('Users').add(user).then((value) => Success(value.id),);
+      
+    } on FirebaseException catch (e){
+      return Failure(e);
+    }
+  }
+
+  Future<Result<List, Exception>> getUsers() async{
+    try{
+      final users = await db.collection('Users').get();
+
+      return Success(users.docs);
+      
     } on FirebaseException catch (e){
       return Failure(e);
     }
