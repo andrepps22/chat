@@ -13,4 +13,12 @@ class UserRepositoryImpl implements IUserRepository {
     final userJson = userDto.toJson();
     return await firestoneService.addUser(userJson);
   }
+  
+  @override
+  Future<Result<List, Exception>> getUsers() async {
+    final result = await firestoneService.getUsers();
+    return result.when(
+      success: (value) => Success(value), 
+      failure:(exception) => Failure(exception),);
+  }
 }
