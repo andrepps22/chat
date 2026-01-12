@@ -13,11 +13,11 @@ class FirestoneFirebaseService {
     }
   }
 
-  Future<Result<List, Exception>> getUsers() async{
+  Future<Result<QuerySnapshot, Exception>> getUsers() async{
     try{
       final users = await db.collection('Users').get();
 
-      return Success(users.docs);
+      return Success(users);
       
     } on FirebaseException catch (e){
       return Failure(e);
