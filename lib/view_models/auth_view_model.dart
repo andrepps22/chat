@@ -2,7 +2,7 @@ import 'package:chat/core/auth/e_auth_state.dart';
 import 'package:chat/core/utils/result.dart';
 import 'package:chat/data/domain/DTOs/user_dto.dart';
 import 'package:chat/data/domain/interfaces/i_auth_repository.dart';
-import 'package:chat/data/domain/use_cases/register_user_use_case.dart';
+import 'package:chat/data/domain/use_cases/user_use_case.dart';
 import 'package:chat/view_models/command.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +11,7 @@ class AuthViewModel with ChangeNotifier {
   late final Command authLoginCommand;
   late final Command authRegisterCommand;
   final IAuthRepository _authRepository;
-  final RegisterUserUseCase _registerUserUseCase;
+  final UserUseCase _registerUserUseCase;
   UserDto? userDto;
   String? nome; // Add nome field
   bool islogged = false;
@@ -20,7 +20,7 @@ class AuthViewModel with ChangeNotifier {
 
   AuthViewModel({
     required IAuthRepository authRepository,
-    required RegisterUserUseCase registerUserUseCase,
+    required UserUseCase registerUserUseCase,
   }) : _authRepository = authRepository,
        _registerUserUseCase = registerUserUseCase {
     authLoginCommand = Command(() => _authRepository.login(userDto!),);

@@ -4,11 +4,11 @@ import 'package:chat/data/domain/DTOs/user_register_dto.dart';
 import 'package:chat/data/domain/interfaces/i_auth_repository.dart';
 import 'package:chat/data/domain/interfaces/i_user_repository.dart';
 
-class RegisterUserUseCase {
+class UserUseCase {
   final IAuthRepository authRepository;
   final IUserRepository userRepository;
 
-  RegisterUserUseCase({
+  UserUseCase({
     required this.authRepository,
     required this.userRepository,
   });

@@ -8,6 +8,7 @@ class HomeViewModel with ChangeNotifier {
   late final Command getUsersCommand;
   final IUserRepository _userRepository;
   List<UserModel>? usersList;
+  
   String? errorMessage;
 
   HomeViewModel({required IUserRepository userRepository})

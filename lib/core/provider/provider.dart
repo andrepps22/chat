@@ -1,6 +1,6 @@
 import 'package:chat/data/domain/interfaces/i_auth_repository.dart';
 import 'package:chat/data/domain/interfaces/i_user_repository.dart';
-import 'package:chat/data/domain/use_cases/register_user_use_case.dart';
+import 'package:chat/data/domain/use_cases/user_use_case.dart';
 import 'package:chat/data/repository/auth_repository_impl.dart';
 import 'package:chat/data/repository/user_repository_impl.dart';
 import 'package:chat/data/services/auth_firebase_services.dart';
@@ -22,8 +22,8 @@ class Providers {
         update: (_, firestoneService, _) => UserRepositoryImpl(firestoneService: firestoneService),),
 
       //=============Use Cases====================
-      ProxyProvider2<IAuthRepository, IUserRepository, RegisterUserUseCase>(
-        update: (_, authRepo, userRepo, _) => RegisterUserUseCase(
+      ProxyProvider2<IAuthRepository, IUserRepository, UserUseCase>(
+        update: (_, authRepo, userRepo, _) => UserUseCase(
           authRepository: authRepo,
           userRepository: userRepo,
         ),),
