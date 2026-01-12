@@ -3,6 +3,7 @@ import 'package:chat/data/domain/DTOs/user_dto.dart';
 import 'package:chat/data/domain/DTOs/user_register_dto.dart';
 import 'package:chat/data/domain/interfaces/i_auth_repository.dart';
 import 'package:chat/data/domain/interfaces/i_user_repository.dart';
+import 'package:chat/data/models/user_model.dart';
 
 class UserUseCase {
   final IAuthRepository authRepository;
@@ -42,5 +43,18 @@ class UserUseCase {
       },
       failure: (exception) => Failure(exception),
     );
+  }
+
+  Future<Result<List<UserModel>, Exception>> getUsers()async{
+    final userCurrent = authRepository.currentUser;
+    final userList = await userRepository.getUsers();
+
+    return userList.when(
+      success: (value) {
+        final listaUserModel = value.where((element) => element.uuid != userCurrent!.uid,).toList();
+
+        return Success(listaUserModel);
+      }, 
+      failure: (exception) => Failure(exception),);
   }
 }
