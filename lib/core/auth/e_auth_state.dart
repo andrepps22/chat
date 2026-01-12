@@ -1,0 +1,4 @@
+enum EAuthState {
+  authenticated,
+  unauthenticated,
+}

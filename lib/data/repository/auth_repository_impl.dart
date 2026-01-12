@@ -1,3 +1,4 @@
+import 'package:chat/core/auth/e_auth_state.dart';
 import 'package:chat/core/utils/result.dart';
 import 'package:chat/data/domain/DTOs/user_dto.dart';
 import 'package:chat/data/domain/interfaces/i_auth_repository.dart';
@@ -11,6 +12,12 @@ class AuthRepositoryImpl implements IAuthRepository {
     required this.authServices
   });
 
+  @override
+  Stream<EAuthState> authState() {
+    return authServices.authState().map(
+      (user) => user == null? EAuthState.unauthenticated: EAuthState.authenticated,
+    );
+  }
 
   @override
   Future<Result<User?, Exception>> login(UserDto userDto) async {
@@ -37,4 +44,6 @@ class AuthRepositoryImpl implements IAuthRepository {
 
   @override
   User? get currentUser => authServices.currentUser;
+  
+  
 }

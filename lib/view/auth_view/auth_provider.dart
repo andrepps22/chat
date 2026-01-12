@@ -1,6 +1,6 @@
 import 'package:chat/data/domain/interfaces/i_auth_repository.dart';
 import 'package:chat/data/domain/use_cases/register_user_use_case.dart';
-import 'package:chat/view/auth_view/auth_view.dart';
+import 'package:chat/view/auth_view/auth_gate.dart';
 import 'package:chat/view_models/auth_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -15,6 +15,6 @@ class AuthProvider extends StatelessWidget {
         authRepository: context.read<IAuthRepository>(),
         registerUserUseCase: context.read<RegisterUserUseCase>(),
       ),
-      child: AuthView(),);
+      child: AuthGate(),);
   }
 }

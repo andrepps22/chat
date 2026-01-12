@@ -4,12 +4,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 class AuthServices {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
+  Stream<User?> authState() {
+    return _firebaseAuth.authStateChanges();
+  }
+
   Future<Result<User?, Exception>> signIn({
-    required Map<String, dynamic> userJson
+    required Map<String, dynamic> userJson,
   }) async {
     try {
       final result = await _firebaseAuth.signInWithEmailAndPassword(
-         email: userJson['email'],
+        email: userJson['email'],
         password: userJson['password'],
       );
       return Success(result.user);
@@ -19,7 +23,7 @@ class AuthServices {
   }
 
   Future<Result<UserCredential, Exception>> signUp({
-    required Map<String, dynamic> userJson
+    required Map<String, dynamic> userJson,
   }) async {
     try {
       final result = await _firebaseAuth.createUserWithEmailAndPassword(
