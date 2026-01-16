@@ -12,14 +12,15 @@ class ChatViewModel extends Viewmodel {
   MessagerModel? messager;
   UserModel? otherUser;
 
-
-  ChatViewModel({required ChatUseCase chatUserCase}): _chatUserCase = chatUserCase {
-    sendMessageCommand = Command(() => _chatUserCase.sendMessager(messager!),);
+  ChatViewModel({required ChatUseCase chatUserCase})
+    : _chatUserCase = chatUserCase {
+    sendMessageCommand = Command(() => _chatUserCase.sendMessager(messager!));
 
     sendMessageCommand.addListener(notifyListeners);
   }
 
-  Stream<QuerySnapshot> get listMessages => _chatUserCase.getMessages(currentUser!.uid, otherUser!.uuid);
+  Stream<QuerySnapshot> get listMessages =>
+      _chatUserCase.getMessages(currentUser!.uid, otherUser!.uuid);
 
   @override
   void dispose() {
@@ -29,11 +30,12 @@ class ChatViewModel extends Viewmodel {
 
   User? get currentUser => _chatUserCase.currentUser;
 
-  Future<void> sendMassage(
-    
-    
-  ) async {
+  Future<void> sendMassage() async {
     await sendMessageCommand.execute();
   }
-  
+
+  void setupChat(UserModel otherUser) {
+    this.otherUser = otherUser;
+    notifyListeners();
+  }
 }

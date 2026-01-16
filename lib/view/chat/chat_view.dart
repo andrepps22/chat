@@ -17,21 +17,14 @@ class _ChatViewState extends State<ChatView> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController message = TextEditingController();
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      context.read<ChatViewModel>().listMessages;
-    },);
-  }
+  
 
   @override
   Widget build(BuildContext context) {
     final UserModel user =
         ModalRoute.of(context)!.settings.arguments as UserModel;
     final vm = context.watch<ChatViewModel>();
-    vm.otherUser = user;
+    vm.setupChat(user);
     return Scaffold(
       appBar: AppBar(title: Text(user.nome), centerTitle: true),
       body: Padding(
@@ -41,6 +34,7 @@ class _ChatViewState extends State<ChatView> {
             Expanded(
               child: Container(
                 child: StreamBuilder(stream: vm.listMessages, builder: (context, snapshot) {
+                  
                   return !snapshot.hasData? CircularProgressIndicator() :
                    ListView(
                     children: snapshot.data!.docs.map((e) => _buildMensage(e, vm.currentUser),).toList(),
