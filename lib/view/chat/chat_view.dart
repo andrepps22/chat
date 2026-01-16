@@ -33,10 +33,14 @@ class _ChatViewState extends State<ChatView> {
           children: [
             Expanded(
               child: Container(
+                decoration: BoxDecoration(
+
+                ),
                 child: StreamBuilder(stream: vm.listMessages, builder: (context, snapshot) {
                   
-                  return !snapshot.hasData? CircularProgressIndicator() :
+                  return !snapshot.hasData? Center(child: CircularProgressIndicator()) :
                    ListView(
+                    
                     children: snapshot.data!.docs.map((e) => _buildMensage(e, vm.currentUser),).toList(),
                   );
                 }),
