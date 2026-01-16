@@ -15,8 +15,7 @@ class MessagerRepository implements IMessagerRepository {
 
   @override
   Stream<QuerySnapshot<Object?>> getMessages(String chatRoomID) {
-    // TODO: implement getMessages
-    throw UnimplementedError();
+    return messageService.getMessages(chatRoomID);
   }
 
   

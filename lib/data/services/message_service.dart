@@ -13,7 +13,7 @@ class MessageService {
   }
 
   Stream<QuerySnapshot> getMessages(String chatRoomID) {
-    return db
+        return db
         .collection('chat_rooms')
         .doc(chatRoomID)
         .collection("messages")

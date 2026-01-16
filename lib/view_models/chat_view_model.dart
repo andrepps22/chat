@@ -1,5 +1,6 @@
 import 'package:chat/data/domain/use_cases/chat_use_case.dart';
 import 'package:chat/data/models/message_model.dart';
+import 'package:chat/data/models/user_model.dart';
 import 'package:chat/view_models/command.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,6 +10,7 @@ class ChatViewModel with ChangeNotifier {
   final ChatUseCase _chatUserCase;
   late final Command sendMessageCommand;
   MessagerModel? messager;
+  UserModel? otherUser;
 
 
   ChatViewModel({required ChatUseCase chatUserCase}): _chatUserCase = chatUserCase {
@@ -17,7 +19,7 @@ class ChatViewModel with ChangeNotifier {
     sendMessageCommand.addListener(notifyListeners);
   }
 
-  Stream<QuerySnapshot> get listMessages => _chatUserCase.getMessages(messager!.senderUserId, messager!.receiverUserId);
+  Stream<QuerySnapshot> get listMessages => _chatUserCase.getMessages(currentUser!.uid, otherUser!.uuid);
 
   @override
   void dispose() {
