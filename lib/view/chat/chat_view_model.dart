@@ -1,12 +1,12 @@
+import 'package:chat/data/domain/contract/viewmodel.dart';
 import 'package:chat/data/domain/use_cases/chat_use_case.dart';
 import 'package:chat/data/models/message_model.dart';
 import 'package:chat/data/models/user_model.dart';
 import 'package:chat/view_models/command.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 
-class ChatViewModel with ChangeNotifier {
+class ChatViewModel extends Viewmodel {
   final ChatUseCase _chatUserCase;
   late final Command sendMessageCommand;
   MessagerModel? messager;

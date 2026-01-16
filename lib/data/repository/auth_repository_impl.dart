@@ -2,15 +2,13 @@ import 'package:chat/core/auth/e_auth_state.dart';
 import 'package:chat/core/utils/result.dart';
 import 'package:chat/data/domain/DTOs/user_dto.dart';
 import 'package:chat/data/domain/interfaces/i_auth_repository.dart';
-import 'package:chat/data/services/auth_firebase_services.dart';
+import 'package:chat/data/services/auth_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthRepositoryImpl implements IAuthRepository {
   final AuthServices authServices;
 
-  AuthRepositoryImpl({
-    required this.authServices
-  });
+  AuthRepositoryImpl(this.authServices);
 
   @override
   Stream<EAuthState> authState() {

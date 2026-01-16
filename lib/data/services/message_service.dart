@@ -1,7 +1,8 @@
 import 'package:chat/data/domain/DTOs/send_messager_dto.dart';
+import 'package:chat/data/domain/contract/service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class MessageService {
+class MessageService extends Service{
   final db = FirebaseFirestore.instance;
 
   Future<void> sendMessager(SendMessagerDto messager) async {

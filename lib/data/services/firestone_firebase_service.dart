@@ -1,7 +1,8 @@
 import 'package:chat/core/utils/result.dart';
+import 'package:chat/data/domain/contract/service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class FirestoneFirebaseService {
+class FirestoneFirebaseService extends Service{
   final db = FirebaseFirestore.instance; 
 
   Future<Result<String, Exception>> addUser(Map<String, dynamic> user)async{

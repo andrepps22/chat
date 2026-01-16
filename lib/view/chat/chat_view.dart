@@ -1,6 +1,6 @@
 import 'package:chat/data/models/message_model.dart';
 import 'package:chat/data/models/user_model.dart';
-import 'package:chat/view_models/chat_view_model.dart';
+import 'package:chat/view/chat/chat_view_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

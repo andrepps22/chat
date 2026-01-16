@@ -2,7 +2,7 @@ import 'package:chat/core/router/app_router_static.dart';
 import 'package:chat/data/domain/DTOs/user_dto.dart';
 import 'package:chat/view/components/custom_buttom.dart';
 import 'package:chat/view/components/custom_textfield.dart';
-import 'package:chat/view_models/auth_view_model.dart';
+import 'package:chat/view/auth_view/auth_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

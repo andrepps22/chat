@@ -1,5 +1,5 @@
 import 'package:chat/core/router/app_router_static.dart';
-import 'package:chat/view_models/home_view_model.dart';
+import 'package:chat/view/home/home_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

@@ -1,7 +1,8 @@
 import 'package:chat/core/utils/result.dart';
+import 'package:chat/data/domain/contract/service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class AuthServices {
+class AuthServices extends Service {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   Stream<User?> authState() {

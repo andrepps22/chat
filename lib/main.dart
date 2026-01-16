@@ -1,3 +1,4 @@
+import 'package:chat/core/config/dependencies.dart';
 import 'package:chat/core/provider/provider.dart';
 import 'package:chat/core/router/app_router.dart';
 import 'package:chat/core/theme/app_theme.dart';
@@ -11,6 +12,9 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform
   );
+  setupDependencies();
+
+  
   
   runApp(MultiProvider(providers: Providers().provider, child: MainApp(),));
 }

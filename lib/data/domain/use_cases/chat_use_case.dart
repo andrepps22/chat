@@ -1,11 +1,12 @@
 import 'package:chat/data/domain/DTOs/send_messager_dto.dart';
+import 'package:chat/data/domain/contract/use_case.dart';
 import 'package:chat/data/domain/interfaces/i_auth_repository.dart';
 import 'package:chat/data/domain/interfaces/i_messager_repository.dart';
 import 'package:chat/data/models/message_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class ChatUseCase {
+class ChatUseCase extends UseCase{
   final IAuthRepository _authRepository;
   final IMessagerRepository _messagerRepository;
 

@@ -1,7 +1,7 @@
 import 'package:chat/core/auth/e_auth_state.dart';
 import 'package:chat/core/router/app_router_static.dart';
 import 'package:chat/view/auth_view/auth_view.dart';
-import 'package:chat/view_models/auth_view_model.dart';
+import 'package:chat/view/auth_view/auth_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -14,14 +14,7 @@ class AuthGate extends StatefulWidget {
 
 class _AuthGateState extends State<AuthGate> {
 
-  // @override
-  // void initState() {
-    
-  //   super.initState();
-  //   WidgetsBinding.instance.addPostFrameCallback((_) {
-  //         context.watch<AuthViewModel>().authState;
-  //       });
-  // }
+  
 
   @override
   Widget build(BuildContext context) {
