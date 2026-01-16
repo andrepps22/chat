@@ -14,16 +14,16 @@
 ┌─────────────────────────────────────────────────────────────────┐
 │           dependencies.dart (setupDependencies)                  │
 │                                                                  │
-│  AutoInjector registra:                                          │
+│  CustomInjector registra:                                        │
 │  ├── Services          (Singletons)                              │
 │  │   └─ AuthServices                                             │
 │  │   └─ FirestoneFirebaseService                                 │
 │  │   └─ MessageService                                           │
 │  │                                                               │
 │  ├── Repositories       (LazySingletons)                         │
-│  │   └─ IAuthRepository (impl)                                   │
-│  │   └─ IUserRepository (impl)                                   │
-│  │   └─ IMessagerRepository (impl)                               │
+│  │   └─ IAuthRepository (AuthRepositoryImpl)                     │
+│  │   └─ IUserRepository (UserRepositoryImpl)                     │
+│  │   └─ IMessagerRepository (MessagerRepository)                 │
 │  │                                                               │
 │  ├── UseCases           (LazySingletons)                         │
 │  │   └─ UserUseCase                                              │
@@ -35,29 +35,31 @@
 │      └─ ChatViewModel                                            │
 │                                                                  │
 │  ✅ _injector.commit() ← Compila todas as dependências           │
-│  ✅ getIt<T>() ← Função global para acessar o injector          │
+│  ✅ _injector.get<T>() ← Função para acessar o injector         │
 └─────────────────────────────────────────────────────────────────┘
                               ↓
 ┌─────────────────────────────────────────────────────────────────┐
-│            provider.dart (Providers.provider)                    │
+│         provider.dart (Providers.provider)                       │
 │                                                                  │
 │  class Providers {                                               │
 │    List<SingleChildStatelessWidget> get provider {              │
 │      return [                                                    │
-│        ChangeNotifierProvider<AuthViewModel>(                    │
-│          create: (_) => getIt<AuthViewModel>()                  │
-│          ↑                   ↑                                    │
-│          │                   └─ AutoInjector fornece             │
-│          └─ Provider distribui na árvore                         │
-│        ),                                                        │
-│        ChangeNotifierProvider<HomeViewModel>(                    │
-│          create: (_) => getIt<HomeViewModel>()                  │
-│        ),                                                        │
-│        ChangeNotifierProvider<ChatViewModel>(                    │
-│          create: (_) => getIt<ChatViewModel>()                  │
-│        ),                                                        │
+│        ViewModelProvider<AuthViewModel>(),                       │
+│        ↑                                                         │
+│        └─ Injeta via CustomInjector                              │
+│                                                                  │
+│        ViewModelProvider<HomeViewModel>(),                       │
+│        ViewModelProvider<ChatViewModel>(),                       │
 │      ];                                                          │
 │    }                                                             │
+│  }                                                               │
+│                                                                  │
+│  class ViewModelProvider<T extends Viewmodel>                    │
+│      extends ChangeNotifierProvider<T> {                         │
+│    ViewModelProvider({super.key, super.child})                  │
+│      : super(create: (context) =>                                │
+│          _injector.getViewmodel<T>()                              │
+│        );                                                        │
 │  }                                                               │
 └─────────────────────────────────────────────────────────────────┘
                               ↓
@@ -68,9 +70,9 @@
 │     context.watch<AuthViewModel>()   ← Reatividade              │
 │     context.read<AuthViewModel>()    ← Acesso único              │
 │                                                                  │
-│  ✅ ViewModels acessam Repositories via AutoInjector:           │
+│  ✅ ViewModels acessam Repositories/UseCases via CustomInjector:│
 │     No construtor: AuthViewModel(                                │
-│       IAuthRepository authRepository,  ← Injetado por AutoInj   │
+│       IAuthRepository authRepository,  ← Injetado por CustomInj │
 │       UserUseCase useCase,                                       │
 │     )                                                            │
 └─────────────────────────────────────────────────────────────────┘
@@ -82,9 +84,9 @@
 |---------|-----------|
 | **AutoInjector** | Gerencia ciclo de vida, resoluções automáticas, tipos complexos |
 | **Provider** | Distribuição reativa na árvore, hot reload, rebuild automático |
-| **Separação** | DI centralizado, UI distribution centralizado |
+| **Separação** | DI centralizado via CustomInjector, UI distribution via Providers |
 | **Performance** | Services/Repos são Singletons (criados 1x), ViewModels novos |
-| **Testabilidade** | Fácil mockar com `getIt<Interface>()` em testes |
+| **Testabilidade** | Fácil mockar com `_injector.getViewmodel<Interface>()` em testes |
 
 ## 📝 Exemplo de Uso nas Views
 
@@ -104,7 +106,7 @@ class _AuthViewState extends State<AuthView> {
     return Column(
       children: [
         // UI que rebuilda quando authVm muda
-        if (authVm.islogged) Text('Logado!'),
+        if (authVm.isLogged) Text('Logado!'),
       ],
     );
   }
@@ -139,18 +141,18 @@ class _HomeViewState extends State<HomeView> {
   ↓
 context.read<AuthViewModel>() [obtém do Provider]
   ↓
-Provider chama getIt<AuthViewModel>() [obtém do AutoInjector]
+Provider chama _injector.getViewmodel<AuthViewModel>() [obtém do CustomInjector]
   ↓
-AutoInjector executa:
+CustomInjector executa:
   AuthViewModel(
-    IAuthRepository authRepo,     ← getIt<IAuthRepository>()
-    UserUseCase useCase           ← getIt<UserUseCase>()
+    IAuthRepository authRepo,     ← _injector.getRepository<IAuthRepository>()
+    UserUseCase useCase           ← _injector.getUseCase<UserUseCase>()
   )
     ↓
   IAuthRepository authRepo está já resolvido? SIM (Lazy Singleton)
     ↓
   AuthRepositoryImpl(
-    AuthServices authServices     ← getIt<AuthServices>()
+    AuthServices authServices     ← resolvido do Singleton
   )
     ↓
   AuthServices já criado? SIM (Singleton)
